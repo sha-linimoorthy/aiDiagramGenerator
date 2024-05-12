@@ -50,7 +50,7 @@ export const Mermaid: FC<IMermaid> = ({ chart, name }) => {
 	return (
 		<div className='relative flex w-full justify-center'>
 			<div className='dropdown dropdown-end absolute bottom-1 right-1 z-50 m-2'>
-				<Dropdown menu={{ items }} placement='topRight'>
+				<Dropdown trigger={['click']} menu={{ items }} placement='topRight'>
 					<Button size='large' icon={<DownloadOutlined />}>
 						Экспорт
 					</Button>

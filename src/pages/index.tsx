@@ -71,7 +71,7 @@ export default function Home() {
 					</form>
 				</div>
 				<div className='relative flex flex-1 border-2 border-dashed'>
-					<div className='absolute left-4 top-3'>
+					<div className='absolute left-4 top-3 z-10'>
 						<Select options={gptModels} value={selectedGPTModel} onChange={setSelectedGPTModel} size={'large'} />
 					</div>
 					{loading ? (
