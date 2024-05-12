@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn-grad {
+/* .btn-grad {
   @apply bg-gradient-to-r from-teal-200 to-lime-200 text-black;
-}
+} */

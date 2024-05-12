@@ -1,63 +1,82 @@
-import mermaid from "mermaid";
-import { FC, useEffect } from "react";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import { Dropdown, Button, MenuProps } from 'antd';
+import mermaid from 'mermaid';
+import { FC, useEffect, useMemo } from 'react';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
+import { DownloadOutlined } from '@ant-design/icons';
 
 interface IMermaid {
-  chart: string;
-  name: string;
+	chart: string;
+	name: string;
 }
 
+const exportSvg = async (chart: string, name: string) => {
+	const svgData = await mermaid.render('text1', chart);
+
+	const svgBlob = new Blob([svgData.svg], {
+		type: 'image/svg_xml;charset=utf-8',
+	});
+
+	const svgUrl = URL.createObjectURL(svgBlob);
+
+	const downloadLink = document.createElement('a');
+	downloadLink.href = svgUrl;
+	downloadLink.download = `${name}.svg`;
+	document.body.appendChild(downloadLink);
+	downloadLink.click();
+	document.body.removeChild(downloadLink);
+};
+
 export const Mermaid: FC<IMermaid> = ({ chart, name }) => {
-  useEffect(() => {
-    if (chart) mermaid.contentLoaded();
-  }, [chart]);
+	useEffect(() => {
+		if (chart) mermaid.contentLoaded();
+	}, [chart]);
 
-  const exportSvg = async () => {
-    const svgData = await mermaid.render("text1", chart);
+	const items: MenuProps['items'] = useMemo(
+		() => [
+			{
+				key: 'svg',
+				label: 'SVG',
+				onClick: () => exportSvg(chart, name),
+			},
+		],
+		[chart, name],
+	);
 
-    const svgBlob = new Blob([svgData.svg], {
-      type: "image/svg_xml;charset=utf-8",
-    });
+	const copyMermaidCode = async () => {
+		await navigator.clipboard.writeText(chart);
+		alert('Mermaid Code' + chart);
+	};
 
-    const svgUrl = URL.createObjectURL(svgBlob);
+	return (
+		<div className='relative flex w-full justify-center'>
+			<div className='dropdown dropdown-end absolute bottom-1 right-1 z-50 m-2'>
+				<Dropdown menu={{ items }} placement='topRight'>
+					<Button size='large' icon={<DownloadOutlined />}>
+						Экспорт
+					</Button>
+				</Dropdown>
+			</div>
 
-    const downloadLink = document.createElement("a");
-    downloadLink.href = svgUrl;
-    downloadLink.download = `${name}.svg`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  };
-
-  const copyMermaidCode = async () => {
-    await navigator.clipboard.writeText(chart);
-    alert("Mermaid Code" + chart);
-  };
-
-  return (
-    <div className="relative w-full flex justify-center">
-      <div className="absolute right-1 bottom-1 m-2 z-50 dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-success m-1">
+			{/* <label tabIndex={0} className="btn btn-success m-1">
           Export
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-gray-700 rounded-box w-52"
+          className="dropdown-content dropdown-top menu p-2 shadow bg-white-700 rounded-box w-52"
         >
           <li>
-            <button onClick={copyMermaidCode}>Copy Mermaid Code</button>
+            <button onClick={copyMermaidCode}>Скопировать Mermaid код</button>
           </li>
           <li>
             <button onClick={exportSvg}>SVG</button>
           </li>
-        </ul>
-      </div>
+        </ul> */}
 
-      <TransformWrapper>
-        <TransformComponent contentClass="w-full" wrapperClass="w-full h-full">
-          <div className="mermaid w-full mb-100">{chart}</div>
-        </TransformComponent>{" "}
-      </TransformWrapper>
-    </div>
-  );
+			<TransformWrapper centerOnInit initialScale={2}>
+				<TransformComponent wrapperStyle={{ width: '100%', height: '100%', textAlign: 'center' }}>
+					<div className='mermaid mb-100 h-full w-full'>{chart}</div>
+				</TransformComponent>
+			</TransformWrapper>
+		</div>
+	);
 };
