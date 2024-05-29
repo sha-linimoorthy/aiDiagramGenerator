@@ -5,36 +5,38 @@ export const generate = async ({
 	input,
 	selectedTemplate,
 	gptModel,
+	syntaxName,
 }: {
 	input: any;
 	selectedTemplate: TemplateEnum;
 	gptModel: GPTMODELSEnum;
+	syntaxName: string;
 }) => {
 	try {
-		const model = new OpenAI({ modelName: gptModel, temperature: 0.2 });
+		const model = new OpenAI({ modelName: gptModel, temperature: 0.7 });
 
 		const template =
-			'Изучи этот mermaid синтаксис: {syntax}. Используя этот синтаксис напиши диаграмму {template} на основе данного текста: {input}. {instructions}';
+			'Изучи этот {syntaxName} синтаксис: {syntaxDoc}. Используя этот синтаксис напиши диаграмму {template} на основе данного текста: {input}. {instructions}';
 
 		const prompt = new PromptTemplate({
 			template,
-			inputVariables: ['template', 'input', 'syntax', 'instructions'],
+			inputVariables: ['template', 'input', 'syntaxName', 'syntaxDoc', 'instructions'],
 		});
 
 		const chain = new LLMChain({ llm: model, prompt });
 
-		const syntaxDoc = await import(`./syntax/${selectedTemplate.toLowerCase()}.md`);
+		const syntaxDoc = await import(`./syntax/${syntaxName}/${selectedTemplate.toLowerCase()}.md`);
 
-		console.log(TemplateInRussianEnum[selectedTemplate]);
+		console.log(syntaxName);
 
 		const res = await chain.call({
 			template: TemplateInRussianEnum[selectedTemplate],
 			input,
-			syntax: syntaxDoc.default,
+			syntaxDoc: syntaxDoc.default,
+			syntaxName,
 			instructions: `
             - используй разные фигуры, цвета и иконки по возможности как указано в синтаксисе.
-            - строгие правила: не используй заметки, не объясняй код и не добавляй любой другой текст, кроме самого кода,
-            - не используй 'end' - синтаксис
+            - строгие правила: не используй заметки, верни только код в указанном синтаксисе, не объясняй код и не добавляй любой другой текст, кроме самого кода,
             - не используй box для диаграммы последовательности
             - не используй скобки внутри блоков
             - используй русский язык

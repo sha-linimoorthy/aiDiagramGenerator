@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { GPTMODELSEnum, TemplateEnum } from '@/lib/prompt-by-template';
+import { GPTMODELSEnum, SYNTAX, TemplateEnum } from '@/lib/prompt-by-template';
 import axios from 'axios';
 import { Mermaid } from '@/components/mermaid';
 import SelectTemplate from '@/components/select-template';
 import { Select } from 'antd';
+import PlantUml from '@/components/plantUml';
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -12,16 +13,27 @@ const gptModels = [
 	{ value: GPTMODELSEnum.GPT_3_5_TURBO, label: GPTMODELSEnum.GPT_3_5_TURBO },
 ];
 
+const syntaxes = [
+	{ value: SYNTAX.MERMAID, label: 'Mermaid' },
+	{ value: SYNTAX.PLANT_UML, label: 'Plant UML' },
+];
+
 export default function Home() {
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [input, setInput] = useState('');
 	const [selectedTemplate, setSelectedTemplate] = useState<string>(TemplateEnum.SEQUENCE);
 	const [selectedGPTModel, setSelectedGPTModel] = useState<string>(GPTMODELSEnum.GPT_4_TURBO);
+	const [syntax, setSyntax] = useState<string>(SYNTAX.MERMAID);
 
 	const name = input ? input.replace(/\s/g, '-').toLowerCase() : '';
 
 	const [chart, setChart] = useState('');
+
+	const handleOnSyntaxChange = (v: string) => {
+		setChart('');
+		setSyntax(v);
+	};
 
 	const handleFlow = async (e: any) => {
 		e.preventDefault();
@@ -33,6 +45,7 @@ export default function Home() {
 				input,
 				selectedTemplate,
 				gptModel: selectedGPTModel,
+				syntax,
 			});
 
 			if (res.data.text) {
@@ -71,8 +84,9 @@ export default function Home() {
 					</form>
 				</div>
 				<div className='relative flex flex-1 border-2 border-dashed'>
-					<div className='absolute left-4 top-3 z-10'>
+					<div className='absolute left-4 top-3 z-10 flex w-full gap-3'>
 						<Select options={gptModels} value={selectedGPTModel} onChange={setSelectedGPTModel} size={'large'} />
+						<Select options={syntaxes} value={syntax} onChange={handleOnSyntaxChange} size={'large'} />
 					</div>
 					{loading ? (
 						<div className='flex w-full animate-pulse items-center justify-center'>
@@ -81,12 +95,16 @@ export default function Home() {
 					) : (
 						<>
 							{!!chart ? (
-								<Mermaid chart={chart} name={name} />
+								syntax === 'mermaid' ? (
+									<Mermaid chart={chart} name={name} />
+								) : (
+									<PlantUml chart={chart} />
+								)
 							) : (
 								<div className='flex w-full flex-col items-center justify-center'>
 									<div>
 										<h1 className='text-7xl font-black'>Генерация</h1>
-										<h3 className='text-8xl font-black text-success'>диаграмм</h3>
+										<h3 className='text-8xl font-black text-slate-500'>диаграмм</h3>
 										<h2 className='text-5xl font-black'>с применением ИИ</h2>
 									</div>
 								</div>

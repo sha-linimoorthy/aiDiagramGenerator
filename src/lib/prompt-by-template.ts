@@ -24,3 +24,8 @@ export enum GPTMODELSEnum {
 	GPT_3_5_TURBO = 'gpt-3.5-turbo',
 	GPT_4_TURBO = 'gpt-4-turbo',
 }
+
+export const SYNTAX = {
+	MERMAID: 'mermaid',
+	PLANT_UML: 'plantUML',
+} as const;

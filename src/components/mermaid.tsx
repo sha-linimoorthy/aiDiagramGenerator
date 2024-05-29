@@ -42,11 +42,6 @@ export const Mermaid: FC<IMermaid> = ({ chart, name }) => {
 		[chart, name],
 	);
 
-	const copyMermaidCode = async () => {
-		await navigator.clipboard.writeText(chart);
-		alert('Mermaid Code' + chart);
-	};
-
 	return (
 		<div className='relative flex w-full justify-center'>
 			<div className='dropdown dropdown-end absolute bottom-1 right-1 z-50 m-2'>
@@ -56,21 +51,6 @@ export const Mermaid: FC<IMermaid> = ({ chart, name }) => {
 					</Button>
 				</Dropdown>
 			</div>
-
-			{/* <label tabIndex={0} className="btn btn-success m-1">
-          Export
-        </label>
-        <ul
-          tabIndex={0}
-          className="dropdown-content dropdown-top menu p-2 shadow bg-white-700 rounded-box w-52"
-        >
-          <li>
-            <button onClick={copyMermaidCode}>Скопировать Mermaid код</button>
-          </li>
-          <li>
-            <button onClick={exportSvg}>SVG</button>
-          </li>
-        </ul> */}
 
 			<TransformWrapper centerOnInit initialScale={2}>
 				<TransformComponent wrapperStyle={{ width: '100%', height: '100%', textAlign: 'center' }}>
