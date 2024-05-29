@@ -14,6 +14,7 @@ export const generate = async ({
 }) => {
 	try {
 		const model = new OpenAI({ modelName: gptModel, temperature: 0.7, openAIApiKey: process.env.OPENAI_API_KEY });
+		console.log(process.env.OPENAI_API_KEY);
 
 		const template =
 			'Изучи этот {syntaxName} синтаксис: {syntaxDoc}. Используя этот синтаксис напиши диаграмму {template} на основе данного текста: {input}. {instructions}';
