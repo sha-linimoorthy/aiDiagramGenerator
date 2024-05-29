@@ -11,6 +11,7 @@ import PlantUml from '@/components/plantUml';
 const gptModels = [
 	{ value: GPTMODELSEnum.GPT_4_TURBO, label: GPTMODELSEnum.GPT_4_TURBO },
 	{ value: GPTMODELSEnum.GPT_3_5_TURBO, label: GPTMODELSEnum.GPT_3_5_TURBO },
+	{ value: GPTMODELSEnum.GPT_4o, label: GPTMODELSEnum.GPT_4o },
 ];
 
 const syntaxes = [
@@ -23,7 +24,7 @@ export default function Home() {
 	const [loading, setLoading] = useState(false);
 	const [input, setInput] = useState('');
 	const [selectedTemplate, setSelectedTemplate] = useState<string>(TemplateEnum.SEQUENCE);
-	const [selectedGPTModel, setSelectedGPTModel] = useState<string>(GPTMODELSEnum.GPT_4_TURBO);
+	const [selectedGPTModel, setSelectedGPTModel] = useState<string>(GPTMODELSEnum.GPT_4o);
 	const [syntax, setSyntax] = useState<string>(SYNTAX.MERMAID);
 
 	const name = input ? input.replace(/\s/g, '-').toLowerCase() : '';

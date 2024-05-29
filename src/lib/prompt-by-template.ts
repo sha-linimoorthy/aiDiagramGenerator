@@ -23,6 +23,7 @@ export enum TemplateInRussianEnum {
 export enum GPTMODELSEnum {
 	GPT_3_5_TURBO = 'gpt-3.5-turbo',
 	GPT_4_TURBO = 'gpt-4-turbo',
+	GPT_4o = 'gpt-4o',
 }
 
 export const SYNTAX = {
