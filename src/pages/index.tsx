@@ -25,7 +25,7 @@ export default function Home() {
 	const [input, setInput] = useState('');
 	const [selectedTemplate, setSelectedTemplate] = useState<string>(TemplateEnum.SEQUENCE);
 	const [selectedGPTModel, setSelectedGPTModel] = useState<string>(GPTMODELSEnum.GPT_4o);
-	const [syntax, setSyntax] = useState<string>(SYNTAX.MERMAID);
+	const [syntax, setSyntax] = useState<string>(SYNTAX.PLANT_UML);
 
 	const name = input ? input.replace(/\s/g, '-').toLowerCase() : '';
 
@@ -75,7 +75,7 @@ export default function Home() {
 								className='absolute left-0 top-0 h-full w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
 								value={input}
 								onChange={(e) => setInput(e.target.value)}
-								placeholder='Опишите процесс'
+								placeholder='Опишите задачу...'
 							/>
 						</div>
 

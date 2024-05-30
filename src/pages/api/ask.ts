@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		input,
 		selectedTemplate = TemplateEnum.SEQUENCE,
 		gptModel = GPTMODELSEnum.GPT_4_TURBO,
-		syntax = 'mermaid',
+		syntax = 'plantUML',
 	} = req.body;
 
 	if (!input) {
