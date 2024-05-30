@@ -3,6 +3,10 @@ import { GPTMODELSEnum, TemplateEnum } from '@/lib/prompt-by-template';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
+export const config = {
+	maxDuration: 60,
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const {
 		input,
