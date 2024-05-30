@@ -42,12 +42,16 @@ export default function Home() {
 		setLoading(true);
 
 		try {
-			const res = await axios.post('/api/ask', {
-				input,
-				selectedTemplate,
-				gptModel: selectedGPTModel,
-				syntax,
-			});
+			const res = await axios.post(
+				'/api/ask',
+				{
+					input,
+					selectedTemplate,
+					gptModel: selectedGPTModel,
+					syntax,
+				},
+				{ timeout: 60000 },
+			);
 
 			if (res.data.text) {
 				console.log(res.data.text);
