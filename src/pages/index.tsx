@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { GPTMODELSEnum, SYNTAX, TemplateEnum } from '@/lib/prompt-by-template';
 import axios from 'axios';
-import { Diagram, Mermaid } from '@/components/diagram';
+import { Diagram } from '@/components/diagram';
 import SelectTemplate from '@/components/select-template';
 import { Select } from 'antd';
-import PlantUml from '@/components/plantUml';
 
 // const inter = Inter({ subsets: ["latin"] });
 
