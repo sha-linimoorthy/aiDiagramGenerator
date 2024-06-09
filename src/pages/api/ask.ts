@@ -26,7 +26,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 		const text =
 			syntax === 'mermaid'
-				? ans.text.replaceAll('```', '').replaceAll(`"`, `'`).replaceAll(`end[End]`, `ends[End]`).replace('mermaid', '')
+				? ans.text
+						.replaceAll('```', '')
+						// .replaceAll(`"`, `'`)
+						.replaceAll(`end[End]`, `ends[End]`)
+						.replace('mermaid', '')
 				: ans.text.replaceAll('```', '').replaceAll('plantuml', '');
 
 		return res.status(200).json({ text });

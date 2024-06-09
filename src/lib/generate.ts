@@ -17,7 +17,7 @@ export const generate = async ({
 		console.log(process.env.OPENAI_API_KEY);
 
 		const template =
-			'Изучи этот {syntaxName} синтаксис: {syntaxDoc}. Используя этот синтаксис напиши диаграмму {template} на основе данного текста: {input}. {instructions}';
+			'Изучи этот {syntaxName} синтаксис: {syntaxDoc}. Используя этот синтаксис, а также правила UML напиши диаграмму {template} на основе данного текста: {input}. {instructions}';
 
 		const prompt = new PromptTemplate({
 			template,

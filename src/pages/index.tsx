@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GPTMODELSEnum, SYNTAX, TemplateEnum } from '@/lib/prompt-by-template';
 import axios from 'axios';
-import { Mermaid } from '@/components/mermaid';
+import { Diagram, Mermaid } from '@/components/diagram';
 import SelectTemplate from '@/components/select-template';
 import { Select } from 'antd';
 import PlantUml from '@/components/plantUml';
@@ -75,7 +75,7 @@ export default function Home() {
 								className='absolute left-0 top-0 h-full w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
 								value={input}
 								onChange={(e) => setInput(e.target.value)}
-								placeholder='Опишите задачу...'
+								placeholder='Опишите процесс'
 							/>
 						</div>
 
@@ -96,11 +96,7 @@ export default function Home() {
 					) : (
 						<>
 							{!!chart ? (
-								syntax === 'mermaid' ? (
-									<Mermaid chart={chart} name={name} />
-								) : (
-									<PlantUml chart={chart} />
-								)
+								<Diagram chart={chart} name={name} syntax={syntax} />
 							) : (
 								<div className='flex w-full flex-col items-center justify-center'>
 									<div>
