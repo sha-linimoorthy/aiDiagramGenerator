@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, run the frontend server:
 
 ```bash
 npm run dev
@@ -11,6 +11,51 @@ yarn dev
 # or
 pnpm dev
 ```
+
+Backend configuration
+Navigate to server folder
+
+**Download ollama server**:  [https://ollama.com/download](url)
+
+Step 1: Create a Virtual Environment
+1. Open your terminal or command prompt.
+2. Navigate to your project directory:
+   ```bash
+   cd path/to/your/project
+   ```
+3. Create a virtual environment:
+   - On **macOS/Linux**:
+     ```bash
+     python3 -m venv venv
+     ```
+   - On **Windows**:
+     ```bash
+     python -m venv venv
+     ```
+   - Replace `venv` with the name you want.
+  
+Step 2: Activate the Virtual Environment
+1. Activate the virtual environment:
+   - On **macOS/Linux**:
+     ```bash
+     source venv/bin/activate
+     ```
+   - On **Windows**:
+     ```bash
+     venv\Scripts\activate
+     ```
+
+Step 3: Install Dependencies from `requirements.txt`
+1. Install the dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+Step 4: Run Backend server
+   ```bash
+   uvicorn app:app 
+   ```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
