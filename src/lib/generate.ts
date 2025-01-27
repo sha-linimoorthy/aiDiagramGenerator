@@ -1,52 +1,38 @@
-import { LLMChain, OpenAI, PromptTemplate } from 'langchain';
-import { GPTMODELSEnum, TemplateEnum, TemplateInRussianEnum } from './prompt-by-template';
+import axios from 'axios';
+import { MODELSEnum, TemplateEnum } from './prompt-by-template';
 
 export const generate = async ({
-	input,
-	selectedTemplate,
-	gptModel,
-	syntaxName,
+  input,
+  selectedTemplate,
+  Model,
+  syntaxName,
 }: {
-	input: any;
-	selectedTemplate: TemplateEnum;
-	gptModel: GPTMODELSEnum;
-	syntaxName: string;
+  input: any;
+  selectedTemplate: TemplateEnum;
+  Model: MODELSEnum;
+  syntaxName: string;
 }) => {
-	try {
-		const model = new OpenAI({ modelName: gptModel, temperature: 0.7, openAIApiKey: process.env.OPENAI_API_KEY });
-		console.log(process.env.OPENAI_API_KEY);
+  try {
+    const syntaxDoc = await import(`./syntax/${syntaxName}/${selectedTemplate.toLowerCase()}.md`);
 
-		const template =
-			'Изучи этот {syntaxName} синтаксис: {syntaxDoc}. Используя этот синтаксис, а также правила UML напиши диаграмму {template} на основе данного текста: {input}. {instructions}';
+    const response = await axios.post(
+      'http://127.0.0.1:5000/generate/diagram', 
+	  
+      { Model,
+		input,
+        syntaxName,
+        syntaxDoc: syntaxDoc.default,
+        selectedTemplate, },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-		const prompt = new PromptTemplate({
-			template,
-			inputVariables: ['template', 'input', 'syntaxName', 'syntaxDoc', 'instructions'],
-		});
-
-		const chain = new LLMChain({ llm: model, prompt });
-
-		const syntaxDoc = await import(`./syntax/${syntaxName}/${selectedTemplate.toLowerCase()}.md`);
-
-		console.log(syntaxName);
-
-		const res = await chain.call({
-			template: TemplateInRussianEnum[selectedTemplate],
-			input,
-			syntaxDoc: syntaxDoc.default,
-			syntaxName,
-			instructions: `
-            - используй разные фигуры, цвета и иконки по возможности как указано в синтаксисе.
-            - строгие правила: не используй заметки, верни только код в указанном синтаксисе, не объясняй код и не добавляй любой другой текст, кроме самого кода,
-            - не используй box для диаграммы последовательности
-            - не используй скобки внутри блоков
-            - используй русский язык
-            `,
-		});
-
-		return res;
-	} catch (e: any) {
-		console.log('openai:debug', e?.response);
-		throw e;
-	}
+    return response.data.response;
+  } catch (error: any) {
+    console.error('Error generating UML diagram:', error.response?.data || error.message);
+    throw error;
+  }
 };

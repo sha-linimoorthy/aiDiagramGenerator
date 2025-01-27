@@ -8,14 +8,14 @@ interface ITemplate {
 }
 
 export const templates: ITemplate[] = [
-	// { label: "Flowchart", value: TemplateEnum.FLOWCHART },
-	// { label: "Mindmap", value: TemplateEnum.MINDMAP },
-	// { label: "Timeline", value: TemplateEnum.TIMELINE },
-	// { label: "User Journey", value: TemplateEnum.USERJOURNEY },
-	// { label: "Entity Relationship", value: TemplateEnum.ENTITYRELATIONSHIP },
-	{ label: 'Диаграмма последовательности', value: TemplateEnum.SEQUENCE },
-	{ label: 'Диаграмма состояний', value: TemplateEnum.STATE },
-	{ label: 'Диаграмма классов', value: TemplateEnum.CLASS },
+	 { label: "Flowchart", value: TemplateEnum.FLOWCHART },
+	 { label: "Mindmap", value: TemplateEnum.MINDMAP },
+	 { label: "Timeline", value: TemplateEnum.TIMELINE },
+	 { label: "User Journey", value: TemplateEnum.USERJOURNEY },
+	 { label: "Entity Relationship", value: TemplateEnum.ENTITYRELATIONSHIP },
+	{ label: 'Sequence Diagrams', value: TemplateEnum.SEQUENCE },
+	{ label: 'State Diagram', value: TemplateEnum.STATE },
+	{ label: 'Class Diagram', value: TemplateEnum.CLASS },
 ];
 
 interface ISelectTemplate {
@@ -25,7 +25,7 @@ interface ISelectTemplate {
 const SelectTemplate: FunctionComponent<ISelectTemplate> = ({ onChange }) => {
 	return (
 		<div>
-			<div className='text-sm text-gray-500'>Выберите тип диаграммы</div>
+			<div className='text-sm text-gray-500'>Select Chart Type</div>
 			<Select
 				className='w-full'
 				size={'large'}
@@ -34,13 +34,6 @@ const SelectTemplate: FunctionComponent<ISelectTemplate> = ({ onChange }) => {
 				options={templates}
 			/>
 		</div>
-		// <select onChange={onChange} className="select select-bordered select-lg">
-		//   {templates.map((item) => (
-		//     <option value={item.value} key={item.label}>
-		//       {item.label}
-		//     </option>
-		//   ))}
-		// </select>
 	);
 };
 

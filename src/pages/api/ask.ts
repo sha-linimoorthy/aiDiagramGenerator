@@ -1,6 +1,5 @@
 import { generate } from '@/lib/generate';
-import { GPTMODELSEnum, TemplateEnum } from '@/lib/prompt-by-template';
-
+import { MODELSEnum, TemplateEnum } from '@/lib/prompt-by-template';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export const config = {
@@ -8,10 +7,11 @@ export const config = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+	console.log('Request Body:', req.body); 
 	const {
 		input,
 		selectedTemplate = TemplateEnum.SEQUENCE,
-		gptModel = GPTMODELSEnum.GPT_4_TURBO,
+		Model = MODELSEnum.LLAMA_3_1,
 		syntax = 'plantUML',
 	} = req.body;
 
@@ -20,21 +20,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	}
 
 	try {
-		const ans = await generate({ input, selectedTemplate, gptModel, syntaxName: syntax });
-
+		const ans = await generate({ input, selectedTemplate, Model, syntaxName: syntax });
 		console.log('ans ', ans);
-
 		const text =
 			syntax === 'mermaid'
-				? ans.text
+				? ans
 						.replaceAll('```', '')
-						// .replaceAll(`"`, `'`)
 						.replaceAll(`end[End]`, `ends[End]`)
 						.replace('mermaid', '')
-				: ans.text.replaceAll('```', '').replaceAll('plantuml', '');
+				: ans.replaceAll('```', '').replaceAll('plantuml', '');
 
 		return res.status(200).json({ text });
 	} catch (e: any) {
+		console.error('Error during generation:', e); // Log the error
 		return res.status(400).json(e);
 	}
 }

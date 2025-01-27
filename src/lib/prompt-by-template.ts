@@ -1,29 +1,16 @@
 export enum TemplateEnum {
-	// FLOWCHART = "FLOWCHART",
-	// MINDMAP = "MINDMAP",
-	// TIMELINE = "TIMELINE",
-	// USERJOURNEY = "USERJOURNEY",
+	FLOWCHART = "FLOWCHART",
+	MINDMAP = "MINDMAP",
+	TIMELINE = "TIMELINE",
+	USERJOURNEY = "USERJOURNEY",
 	CLASS = 'CLASS',
-	// ENTITYRELATIONSHIP = "ENTITYRELATIONSHIP",
+	ENTITYRELATIONSHIP = "ENTITYRELATIONSHIP",
 	SEQUENCE = 'SEQUENCE',
 	STATE = 'STATE',
 }
 
-export enum TemplateInRussianEnum {
-	// FLOWCHART = "FLORWCHART",
-	// MINDMAP = "MINDMAP",
-	// TIMELINE = "TIMELINE",
-	// USERJOURNEY = "USERJOURNEY",
-	CLASS = 'классов',
-	// ENTITYRELATIONSHIP = "ENTITYRELATIONSHIP",
-	SEQUENCE = 'последовательности',
-	STATE = 'состояний',
-}
-
-export enum GPTMODELSEnum {
-	GPT_3_5_TURBO = 'gpt-3.5-turbo',
-	GPT_4_TURBO = 'gpt-4-turbo',
-	GPT_4o = 'gpt-4o',
+export enum MODELSEnum {
+	LLAMA_3_1 = 'llama3.1'
 }
 
 export const SYNTAX = {

@@ -61,7 +61,7 @@ export const Diagram: FC<IDiagram> = ({ chart, name, syntax }) => {
 			<div className='dropdown dropdown-end absolute bottom-1 right-1 z-50 m-2'>
 				<Dropdown trigger={['click']} menu={{ items }} placement='topRight'>
 					<Button size='large' icon={<DownloadOutlined />}>
-						Экспорт
+						Export
 					</Button>
 				</Dropdown>
 			</div>
