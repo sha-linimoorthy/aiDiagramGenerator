@@ -24,7 +24,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def generate_ollama_response_uml(model, prompt):
+    messages = [
+		{'role': 'system', 'content': ''},
+		{'role': 'user', 'content': prompt}
+	       ]    
+    response = chat(model=model, messages=messages)
+    return response['message']['content']
     
+executor = ThreadPoolExecutor(max_workers=20)
+
 @app.post("/generate/diagram")
 async def generate_diagram(request: Request):
     try:
